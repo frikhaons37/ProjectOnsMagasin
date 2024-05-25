@@ -1,0 +1,73 @@
+﻿@model List<ProjectOnsMagasin.OrderProduct>
+@{
+    ViewData["Title"] = "Index";
+}
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .checkout-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+            .checkout-btn:hover {
+                background-color: #0056b3;
+            }
+    </style>
+    <table>
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Image</th>
+                <th>Quantité</th>
+                <th>Prix</th>
+                <th>Prix Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var orderProduct in Model)
+            {
+            var product = orderProduct.Product;
+            int quantity = Model.Where(e => e.ProductId == product.Id).Select(e => e.Quantity).First();
+                var totalPrice = quantity * product.Price;
+                <tr>
+                    <td>@product.Name</td>
+                    <td>
+                        <img src="@Url.Content(product.ImagePath)" class="img-fluid" alt="Product Image" style="max-width: 100px; max-height: 50px;" />
+                    </td>
+                    <td>
+                        @orderProduct.Quantity
+                    </td>
+                    <td>@product.Price</td>
+                    <td>@totalPrice</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+

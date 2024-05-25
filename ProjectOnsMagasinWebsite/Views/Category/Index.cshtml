@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ProjectOnsMagasin.Category>
+
+@{
+    ViewData["Title"] = "List Catégorie";
+}
+<style>
+    .modifier-btn {
+        background-color: #4CAF50; /* Couleur de fond */
+        color: white; /* Couleur du texte */
+        padding: 10px 30px; /* Espace intérieur */
+        border: none; /* Pas de bordure */
+        cursor: pointer; /* Curseur en forme de main */
+        text-align: center; /* Centrer le texte */
+        text-decoration: none; /* Pas de soulignement */
+        display: inline-block; /* Afficher comme bloc en ligne */
+        font-size: 16px; /* Taille de police */
+    }
+
+        .modifier-btn:hover {
+            background-color: #45a049; /* Couleur de fond au survol */
+        }
+
+    /* Style pour le bouton "Détail" */
+    .detail-btn {
+        background-color: #008CBA; /* Couleur de fond */
+        color: white; /* Couleur du texte */
+        padding: 10px 30px; /* Espace intérieur */
+        border: none; /* Pas de bordure */
+        cursor: pointer; /* Curseur en forme de main */
+        text-align: center; /* Centrer le texte */
+        text-decoration: none; /* Pas de soulignement */
+        display: inline-block; /* Afficher comme bloc en ligne */
+        font-size: 16px; /* Taille de police */
+    }
+
+        .detail-btn:hover {
+            background-color: #0077A8; /* Couleur de fond au survol */
+        }
+
+
+
+
+</style>
+<h1><center>La Liste Des Catégories</center></h1>
+<form class="form-inline my-2 my-lg-0 d-flex align-items-center" asp-action="Search" asp-controller="Category">
+    <div class="input-group input-group-sm mr-2 flex-grow-1">
+        <input class="form-control" name="name" type="search" placeholder="Search" aria-label="Search">
+    </div>
+    <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+
+<p>
+    <a asp-action="Create" style="text-decoration: none; font-weight: bold; color: #008080;">Créer Une Nouvelle Catégorie</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td style="width: 20%;">
+                @Html.DisplayFor(modelItem => item.Name)
+                <td style="width: 80%;">
+                    <div style="display: flex; justify-content: center;">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="modifier-btn">Modifier</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id" class="detail-btn">Détails</a> |
+                            @using (Html.BeginForm("Delete", "Category", new { id = item.Id }, FormMethod.Post))
+{
+                            <input type="submit" value="Supprimer" class="btn btn-danger delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie?');" />
+}
+                    </div>
+                </td>
+
+        </tr>
+}
+    </tbody>
+</table>

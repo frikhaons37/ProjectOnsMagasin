@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ProjectOnsMagasin.Product>
+<style>
+    /* Style pour la carte */
+    .card {
+        border: 1px solid #ddd; /* Bordure de la carte */
+        border-radius: 10px; /* Coins arrondis */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre */
+    }
+
+    .card-header {
+        background-color: #f8f9fa; /* Couleur de fond de l'en-tête */
+        padding: 10px; /* Espacement intérieur */
+        border-bottom: 1px solid #ddd; /* Bordure inférieure */
+    }
+
+    .card-img-top {
+        border-top-left-radius: 10px; /* Coins arrondis de l'image */
+        border-top-right-radius: 10px;
+    }
+
+    .card-footer {
+        background-color: #f8f9fa; /* Couleur de fond du pied de page */
+        padding: 10px; /* Espacement intérieur */
+        border-top: 1px solid #ddd; /* Bordure supérieure */
+    }
+
+</style>
+@{
+    ViewData["Title"] = "Index";
+}
+<h1><center>Liste des produits ordonnée par les produits les plus vendus</center></h1>
+
+<form class="form-inline my-2 my-lg-0 d-flex align-items-center" asp-action="Search" asp-controller="Product">
+    <div class="input-group input-group-sm mr-2 flex-grow-1">
+        <input class="form-control" name="name" type="search" placeholder="Search" aria-label="Search">
+    </div>
+    <button class="btn btn-outline-success" type="submit">Chercher</button>
+</form>
+
+<div class="card-group">
+
+    @foreach (var product in Model)
+    {
+        var photoPath = product.ImagePath;
+
+        <div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
+            <div class="card-header">
+                <h5><b>Nom : </b> @product.Name</h5>
+                <h5><b>Prix : </b>@product.Price</h5>
+                <h5><b>Catégorie : </b> @product.Category.Name</h5>
+            </div>
+            <img class="card-img-top imageThumbnail" src="@photoPath" asp-append-version="true" />
+            <div class="card-footer text-center">
+                <div class="row justify-content-center">
+                    <div class="col-md-auto">
+                        <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-primary m-1" style="font-weight: bold;">Voir</a>
+                    </div>
+                    <div class="col-md-auto">
+                        @if (product.Qunatity > 0)
+                        {
+                            @using (Html.BeginForm("AddToCart", "Cart", new { productId = product.Id }, FormMethod.Post))
+                            {
+                                <button type="submit" class="btn btn-primary" style="font-weight: bold; color: #fff; background-color: #20B2AA;">Add</button>
+                            }
+                        }
+                        else
+                        {
+                            <span style="border: 1px solid;padding: 5px 8px;color: red;border-radius: 5px;">Out of stock</span>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+
+</div>
+
+

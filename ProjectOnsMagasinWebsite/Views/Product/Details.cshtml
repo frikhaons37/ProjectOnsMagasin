@@ -1,0 +1,50 @@
+﻿@model ProjectOnsMagasin.Product
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>
+    <center>Détails Du Produit @Html.DisplayFor(model => model.Name)</center>
+</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Brand)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Brand)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price) Dt
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category.Name)
+        </dd>
+        
+       
+        <dd class="col-sm-10">
+            <center>
+            <img src="@Url.Content(Model.ImagePath)" class="img-fluid" alt="Product Image" style="max-width:900px;max-height:800px"/>
+            </center>
+        </dd>
+
+
+       
+    </dl>
+</div>
+

@@ -1,0 +1,161 @@
+﻿@model ProjectOnsMagasin.Order
+@{
+    ViewData["Title"] = "Index";
+}
+@if (Model != null && Model.OrdersProducts !=null && Model.OrdersProducts.Any())
+{
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .checkout-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+            .checkout-btn:hover {
+                background-color: #0056b3;
+            }
+    </style>
+    List<Product> products = Model.OrdersProducts.Select(e => e.Product).ToList();
+    <table>
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Image</th>
+                <th>Quantité</th>
+                <th>Prix</th>
+                <th>Prix Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                int quantity = Model.OrdersProducts.Where(e => e.ProductId == product.Id).Select(e => e.Quantity).First();
+                var totalPrice = quantity * product.Price;
+                <tr>
+                    <td>@product.Name</td>
+                    <td>
+                        <img src="@Url.Content(product.ImagePath)" class="img-fluid" alt="Product Image" style="max-width: 100px; max-height: 50px;" />
+                    </td>
+                    <td>
+                        <button class="quantity-btn" onclick="decreaseQuantity(this)">-</button>
+                        <span>@quantity</span>
+                        <button class="quantity-btn" onclick="increaseQuantity(this)">+</button>
+                    </td>
+                    <td>@product.Price</td>
+                    <td>@totalPrice</td>
+                    <td>
+                        @using (Html.BeginForm("Delete", "Cart", new { productId = product.Id, orderId = Model.Id }
+                      , FormMethod.Post))
+                        {
+                            <button type="submit" class="btn btn-danger delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce produit du panier?');">Supprimer</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">Total</td>
+                <td>@Model.TotalPrice</td>
+            </tr>
+        </tfoot>
+    </table>
+    @using (Html.BeginForm("CheckOutCart", "Cart", FormMethod.Post))
+    {
+        <button type="submit" class="checkout-btn" onclick="return confirm('Êtes-vous sûr de vouloir passer cette commande?');">Checkout</button>
+    }
+    <script>
+        function increaseQuantity(btn) {
+        var quantitySpan = btn.parentNode.querySelector('span');
+        var currentQuantity = parseInt(quantitySpan.innerText);
+        quantitySpan.innerText = currentQuantity + 1;
+        recalculateTotal();
+        }
+
+        function decreaseQuantity(btn) {
+        var quantitySpan = btn.parentNode.querySelector('span');
+        var currentQuantity = parseInt(quantitySpan.innerText);
+        if (currentQuantity > 1) {
+        quantitySpan.innerText = currentQuantity - 1;
+        recalculateTotal();
+        }
+        }
+
+        function recalculateTotal() {
+        var rows = document.querySelectorAll('tbody tr');
+        var total = 0;
+        rows.forEach(function (row) {
+        var quantity = parseInt(row.querySelector('td:nth-child(3) span').innerText);
+        var price = parseFloat(row.querySelector('td:nth-child(4)').innerText);
+        var totalPrice = quantity * price;
+        row.querySelector('td:nth-child(5)').innerText = totalPrice.toFixed(2);
+        total += totalPrice;
+        });
+        document.querySelector('tfoot td:last-child').innerText = total.toFixed(2);
+        }
+    </script>
+}
+else
+{
+    <div class="container">
+        <p class="empty-cart">Cart Empty</p>
+        <a href="Product/ListProduct" class="add-products-btn">Add des produits</a>
+    </div>
+
+    <style>
+
+
+        .container {
+            text-align: center;
+        }
+
+        .empty-cart {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .add-products-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+            .add-products-btn:hover {
+                background-color: #0056b3;
+            }
+    </style>
+}
+

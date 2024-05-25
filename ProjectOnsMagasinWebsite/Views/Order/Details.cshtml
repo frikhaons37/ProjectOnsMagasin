@@ -1,0 +1,97 @@
+﻿@model List<ProjectOnsMagasin.Order>
+
+@{
+    ViewData["Title"] = "Liste des Utilisateurs";
+}
+
+<style>
+
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    .validate-btn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        display: block;
+        margin: 0 auto;
+    }
+
+        .validate-btn:hover {
+            background-color: #0056b3;
+        }
+
+    .print-btn {
+        float: right;
+        background-color: #000;
+    }
+
+</style>
+<div class="container">
+    <h1>Liste des Commandes</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Commande Id</th>
+                <th>Total de Commande</th>
+                <th>Crée à</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(order.Id.ToString(), "GetOrderProductDetails", "Order", new { id = order.Id }, null)
+                    </td>
+                    <td>@order.TotalPrice</td>
+                    <td>@order.CreatedAt</td>
+                    <td>
+                        <a href="@Url.Action("GetPdf", "Order", new { orderId = order.Id })" class="btn btn-primary" target="_blank">Imprimer</a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

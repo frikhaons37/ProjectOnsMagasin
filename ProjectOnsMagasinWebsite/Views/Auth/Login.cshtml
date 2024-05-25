@@ -1,0 +1,91 @@
+﻿@model UserLoginRequestModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+    }
+
+    .login-container {
+        max-width: 600px;
+        margin: 60px auto;
+        background-color: #fff;
+        padding: 30px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        .login-container input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        
+
+        
+
+    button[type="submit"] {
+        background-color: black;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+        width: 100%;
+    }
+
+        button[type="submit"]:hover {
+            background-color: black;
+        }
+</style>
+<div class="login-container">
+    <h2>Login</h2>
+
+    <form asp-action="Login" method="post">
+        <div asp-validation-summary="All"></div>
+        <div>
+            <label asp-for="Email"></label>
+            <input asp-for="Email"  />
+            <span class="invalid-feedback" asp-validation-for="Email"></span>
+        </div>
+        <div>
+            <label asp-for="Password"></label>
+            <input asp-for="Password"  />
+            <span class="invalid-feedback" asp-validation-for="Password"></span>
+        </div>
+        <div>
+            <button type="submit"><center>Login</center></button>
+        </div>
+    </form>
+</div>

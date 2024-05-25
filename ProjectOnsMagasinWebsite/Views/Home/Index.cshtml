@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenue chez ElectroShop</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .jumbotron {
+            background-image: url('https://www.salesforce.com/blog/wp-content/uploads/sites/2/2023/11/SF_Blog_Image_Ecommerce_Changing_Everything.jpg');
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: black;
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: black;
+        }
+
+        .btn-black {
+            color: #fff; /* Couleur du texte */
+            background-color: #000; /* Couleur de fond */
+            border-color: #000; /* Couleur de la bordure */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="jumbotron">
+        <h1>Bienvenue chez Electro-Ons-Shop</h1>
+        <p>Découvrez des offres incroyables et des produits adaptés uniquement pour vous</p>
+        <a class="btn btn-lg btn-black" asp-action="ListProduct" asp-controller="Product" role="button">Explorer Nos Produits</a>
+    </div>
+
+    <!-- You can add more sections here such as featured products, promotions, etc. -->
+    <!-- Optional: Include JavaScript libraries if needed -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
